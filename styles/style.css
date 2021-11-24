@@ -19,9 +19,6 @@ h1 {
   
   #lava {
     position: absolute;
-    bottom: 0;
-    height: 100px;
-    width: 800px;
     background-color: red;
   }
   
