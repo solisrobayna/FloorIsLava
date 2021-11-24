@@ -31,8 +31,6 @@ function startGame () {
     parent.appendChild(player2.self)
     parent.appendChild(lava.self)
 
-    var gravity = 0.98
-
     window.addEventListener('keydown',function(e) {
         switch(e.key) {
             case 'ArrowRight':
