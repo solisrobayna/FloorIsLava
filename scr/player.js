@@ -11,7 +11,7 @@ function Player(width, height, posx, posy) {
   this.height = height
   this.wide = width
   this.speedX = 0
-  this.speedY = 10
+  this.speedY = 40
   this.directionY = 1
   this.jumping = false
 
@@ -23,12 +23,22 @@ function Player(width, height, posx, posy) {
   }
 
   this.moveY = function (platform) {
-    if(!this.collideBottom(platform)) {
-      this.vert += this.directionY * this.speedY        
+    if (this.jumping && this.speedY >= 0.15) {
+      this.vert -= this.speedY
+      this.speedY -= this.speedY*0.6
+      if (this.vert <= platform) {
+        this.vert = platform
+      }
       this.self.style.top = this.vert + 'px'
+    } else {
+      if (!this.collideBottom(platform)) {
+        this.vert += this.directionY * 20
+        this.self.style.top = this.vert + 'px'
+      } else {
+        this.speedY = 40
+        this.jumping = false
+      }
     }
-//posición y - velocidad vertical
-//veloc vertical + gravedad
   }
 
   this.jump = function () {
