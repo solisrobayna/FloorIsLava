@@ -79,9 +79,8 @@ function startGame () {
         player1.moveY(plat1, player2)
         player2.moveX(player1)
         player2.moveY(plat1, player1)
-        player1.movePunch(player2)
-        player2.movePunch(player1)
-        lava.grow()
+        player2.moveHit()
+      //  lava.grow()
        if (player1.collideLava(600 - lava.height) ||
             player2.collideLava(600 - lava.height)) {
             clearInterval(timerId)
