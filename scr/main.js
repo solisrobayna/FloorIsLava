@@ -32,7 +32,6 @@ function startGame () {
     parent.appendChild(lava.sprite)
 
     window.addEventListener('keydown',function(e) {
-        console.log(e.key)
         switch(e.key) {
             case 'ArrowRight':
                 player1.direction = 1
@@ -80,7 +79,8 @@ function startGame () {
         player1.moveY(plat1, player2)
         player2.moveX(player1)
         player2.moveY(plat1, player1)
-        lava.grow()
+        player2.moveHit()
+      //  lava.grow()
        if (player1.collideLava(600 - lava.height) ||
             player2.collideLava(600 - lava.height)) {
             clearInterval(timerId)
@@ -91,7 +91,3 @@ function startGame () {
 
     
 }
- 
-
-    
-

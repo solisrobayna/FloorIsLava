@@ -29,8 +29,8 @@ h1 {
   
   #player {
     position: absolute;
-    background: url(/assets/graphics/player1quieto.png);
-    border: solid 2px
+    background: url(../assets/graphics/player1quieto.png) 0px 0px;
+    border: solid 1px black;
   }
 
   #goal {

@@ -12,17 +12,17 @@ function Player(width, height, posx, posy) {
   this.height = height
   this.wide = width
   this.speedX = 0
-  this.speedHit = 0
+  this.speedHit = 25
   this.speedY = 40
   this.directionY = 1
   this.jumping = false
+  this.punched = false
   
 
   this.moveX = function (enemy) {
     if (this.hor >= 0 && this.hor <= 780) {
       this.hor += 5 * this.direction
       this.sprite.style.left = this.hor + 'px'
-      this.collidePlayers(enemy)
       if (this.collidePlayers(enemy)) {
         this.bump(enemy)
       }
@@ -90,27 +90,27 @@ function Player(width, height, posx, posy) {
   }
 
   this.attack = function (enemy) {
-    this.sprite.style.width = 60 + 'px'
-    this.sprite.style.background = 'url(../assets/graphics/PLAYER1FIGHT.png)'
-    this.punchEnemy(enemy)
+    this.wide = 60
+    this.sprite.style.width = this.wide + 'px'
+    this.sprite.style.background = 'url(../assets/graphics/PLAYER1FIGHT.png)' //invertir imagen según dirección de personaje - crear función
+    if (this.collidePlayers(enemy)) {
+      enemy.punched = true
+    }
     let timerId = setTimeout (function () {
-      self.sprite.style.width = 20 + 'px'
+      self.wide = 20
+      self.sprite.style.width = self.wide + 'px'
     }, 500)
   }
 
-  this.punchEnemy = function (enemy) {
-      enemy.speedHit = 40
-      enemy.hor += enemy.speedHit
-      enemy.speedHit -= enemy.speedHit * 0.6 
-      enemy.sprite.style.left = enemy.hor + 'px'
-    
+  this.moveHit = function () {
+    if (this.punched && this.speedHit >=0.15) {
+      this.hor += this.speedHit
+      this.speedHit -= this.speedHit*0.6
+      this.sprite.style.left = this.hor + 'px'
+    } else {
+      this.punched = false
+      this.speedHit = 25
+    } 
   }
-    
+
 }
-
-
-
-
-
-
-
