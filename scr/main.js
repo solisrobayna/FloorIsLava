@@ -19,9 +19,9 @@ function startGame () {
    /* var plat2 = new Platform ('75px','150px','300px','350px','platform')
     var plat3 = new Platform ('75px','250px','500px','250px','platform')
     var plat4 = new Platform ('75px','350px','650px','150px','platform')*/
-    var player1 = new Player(20, 20, 350, 280)
-    var player2 = new Player(20, 20, 450, 280)
-    player2.self.style.background = 'yellow'
+    var player1 = new Player(20, 48, 350, 280)
+    var player2 = new Player(20, 48, 450, 280)
+    player2.self.style.background = 'url(/assets/graphics/PLAYER2NORMAL.png)'
     var lava = new Lava (800, 100, 0, 500)
     parent.appendChild(plat1.self)
     /*parent.appendChild(plat2.self)

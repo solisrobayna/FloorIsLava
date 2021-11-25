@@ -20,6 +20,9 @@ function Player(width, height, posx, posy) {
       this.hor += 5 * this.direction
       this.self.style.left = this.hor + 'px'
       this.collidePlayers(enemy)
+      if (this.collidePlayers(enemy)) {
+        this.bump(enemy)
+      }
     }
   }
 
@@ -41,9 +44,14 @@ function Player(width, height, posx, posy) {
     }
   }
 
-  this.jump = function () {
-
+  this.bump = function(enemy) {
+    this.hor += 5 * this.direction * -1
+    this.self.style.left = this.hor + 'px'
+    enemy.hor += 5 * this.direction 
+    enemy.self.style.left = enemy.hor + 'px'
   }
+
+  
 
   this.collideLava = function (lava) {
     if (this.vert + this.height >= lava) {

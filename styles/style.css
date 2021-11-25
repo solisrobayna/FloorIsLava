@@ -29,7 +29,7 @@ h1 {
   
   #player {
     position: absolute;
-    background-color: blue;
+    background: url(/assets/graphics/player1quieto.png);
   }
 
   #goal {
