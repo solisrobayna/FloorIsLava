@@ -1,5 +1,6 @@
 function Player(width, height, posx, posy) {
   this.self = document.createElement('div')
+  var self = this.self
   this.self.setAttribute('id', 'player')
   this.self.style.top = posy + 'px'
   this.self.style.left = posx + 'px'
@@ -10,7 +11,7 @@ function Player(width, height, posx, posy) {
   this.vert = posy
   this.height = height
   this.wide = width
-  this.speedX = 0
+  this.speedX = 3  // velocidad horizontal para el salto
   this.speedY = 40
   this.directionY = 1
   this.jumping = false
@@ -18,6 +19,9 @@ function Player(width, height, posx, posy) {
   this.moveX = function () {
     if (this.hor >= 0 && this.hor <= 780) {
       this.hor += 5 * this.direction
+      if(this.direction != 0) {
+        this.self.style.transform = `scaleX(${this.direction})`
+      }
       this.self.style.left = this.hor + 'px'
     }
   }
@@ -25,11 +29,10 @@ function Player(width, height, posx, posy) {
   this.moveY = function (platform) {
     if (this.jumping && this.speedY >= 0.15) {
       this.vert -= this.speedY
-      this.speedY -= this.speedY*0.6
-      if (this.vert <= platform) {
-        this.vert = platform
-      }
+      this.hor += this.speedX*this.direction  //para que coja impulso hacia la dirección a la que camina
+      this.speedY -= this.speedY*0.55
       this.self.style.top = this.vert + 'px'
+      this.self.style.left = this.hor + 'px'
     } else {
       if (!this.collideBottom(platform)) {
         this.vert += this.directionY * 20
@@ -41,8 +44,11 @@ function Player(width, height, posx, posy) {
     }
   }
 
-  this.jump = function () {
-
+  this.attack = function () {
+    this.self.style.background = 'url(assets/sprites/Punk_attack1.png) 100px 0px'
+    setTimeout(function (self) {
+      self.style.background = 'url(assets/sprites/Punk_idle.png)'
+    },1000)
   }
 
   this.collideLava = function (lava) {

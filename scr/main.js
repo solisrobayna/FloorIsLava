@@ -19,9 +19,9 @@ function startGame () {
    /* var plat2 = new Platform ('75px','150px','300px','350px','platform')
     var plat3 = new Platform ('75px','250px','500px','250px','platform')
     var plat4 = new Platform ('75px','350px','650px','150px','platform')*/
-    var player1 = new Player(20, 20, 350, 280)
-    var player2 = new Player(20, 20, 450, 280)
-    player2.self.style.background = 'yellow'
+    var player1 = new Player(48, 48, 350, 252)
+    var player2 = new Player(48, 48, 450, 252)
+    player2.self.style.background = 'url(assets/sprites/Cyborg_idle.png)'
     var lava = new Lava (800, 100, 0, 500)
     parent.appendChild(plat1.self)
     /*parent.appendChild(plat2.self)
@@ -32,6 +32,7 @@ function startGame () {
     parent.appendChild(lava.self)
 
     window.addEventListener('keydown',function(e) {
+        console.log(e.key)
         switch(e.key) {
             case 'ArrowRight':
                 player1.direction = 1
@@ -43,6 +44,9 @@ function startGame () {
                 if(!player1.jumping) {
                     player1.jumping = true
                 }
+                break
+            case 'ArrowDown':
+                player1.attack()
                 break
         }
     })

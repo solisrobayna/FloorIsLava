@@ -29,7 +29,8 @@ h1 {
   
   #player {
     position: absolute;
-    background-color: blue;
+    background: url(/assets/sprites/Punk_idle.png) 0px 0px;
+    border: solid 1px black;
   }
 
   #goal {
