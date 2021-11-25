@@ -46,7 +46,8 @@ function startGame () {
                 break
         }
     })
-  
+
+
     window.addEventListener('keydown', function(e){
       switch (e.key.toLowerCase()) {
           case 'd':
@@ -69,9 +70,9 @@ function startGame () {
     })
   
     var timerId = setInterval(function() {  
-        player1.moveX()
+        player1.moveX(player2)
         player1.moveY(plat1)
-        player2.moveX()
+        player2.moveX(player1)
         player2.moveY(plat1)
         lava.grow()
        if (player1.collideLava(600 - lava.height) ||
@@ -79,6 +80,7 @@ function startGame () {
             clearInterval(timerId)
             window.alert('GAME OVER')
         }
+        
     },50)
 
     
