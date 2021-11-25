@@ -19,17 +19,17 @@ function startGame () {
    /* var plat2 = new Platform ('75px','150px','300px','350px','platform')
     var plat3 = new Platform ('75px','250px','500px','250px','platform')
     var plat4 = new Platform ('75px','350px','650px','150px','platform')*/
-    var player1 = new Player(48, 48, 350, 252)
-    var player2 = new Player(48, 48, 450, 252)
-    player2.self.style.background = 'url(assets/sprites/Cyborg_idle.png)'
+    var player1 = new Player(20, 48, 350, 280)
+    var player2 = new Player(20, 48, 450, 280)
+    player2.sprite.style.background = 'url(../assets/graphics/PLAYER2NORMAL.png)'
     var lava = new Lava (800, 100, 0, 500)
-    parent.appendChild(plat1.self)
-    /*parent.appendChild(plat2.self)
-    parent.appendChild(plat3.self)
-    parent.appendChild(plat4.self)*/
-    parent.appendChild(player1.self)
-    parent.appendChild(player2.self)
-    parent.appendChild(lava.self)
+    parent.appendChild(plat1.sprite)
+    /*parent.appendChild(plat2.sprite)
+    parent.appendChild(plat3.sprite)
+    parent.appendChild(plat4.sprite)*/
+    parent.appendChild(player1.sprite)
+    parent.appendChild(player2.sprite)
+    parent.appendChild(lava.sprite)
 
     window.addEventListener('keydown',function(e) {
         console.log(e.key)
@@ -45,12 +45,13 @@ function startGame () {
                     player1.jumping = true
                 }
                 break
-            case 'ArrowDown':
-                player1.attack()
+            case 'Enter':
+                player1.attack (player2)
                 break
         }
     })
-  
+
+
     window.addEventListener('keydown', function(e){
       switch (e.key.toLowerCase()) {
           case 'd':
@@ -59,6 +60,8 @@ function startGame () {
             case 'a':
                 player2.direction = -1
                 break
+            case 's':
+                player2.attack()
       }
     }) 
   
@@ -73,21 +76,18 @@ function startGame () {
     })
   
     var timerId = setInterval(function() {  
-        player1.moveX()
-        player1.moveY(plat1)
-        player2.moveX()
-        player2.moveY(plat1)
+        player1.moveX(player2)
+        player1.moveY(plat1, player2)
+        player2.moveX(player1)
+        player2.moveY(plat1, player1)
         lava.grow()
        if (player1.collideLava(600 - lava.height) ||
             player2.collideLava(600 - lava.height)) {
             clearInterval(timerId)
             window.alert('GAME OVER')
         }
+        
     },50)
 
     
 }
- 
-
-    
-
