@@ -27,9 +27,19 @@ h1 {
     background-color: green;
   }
   
-  #player {
+  #player1 {
     position: absolute;
-    background: url(../assets/graphics/player1quieto.png) 0px 0px;
+    background: url(../assets/graphics/JUG3CAMINA1.png) 0px 0px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: solid 1px black;
+  }
+  
+  #player2 {
+    position: absolute;
+    background: url(../assets/graphics/JUG4CAMINA1.png) 0px 0px;
+    background-size: contain;
+    background-repeat: no-repeat;
     border: solid 1px black;
   }
 
