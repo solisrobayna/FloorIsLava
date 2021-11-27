@@ -1,7 +1,7 @@
-function Player(width, height, posx, posy) {
+function Player(width, height, posx, posy, playernum) {
   var self = this
   this.sprite = document.createElement('div')
-  this.sprite.setAttribute('id', 'player')
+  this.sprite.setAttribute('id', `player${playernum}`)
   this.sprite.style.top = posy + 'px'
   this.sprite.style.left = posx + 'px'
   this.sprite.style.width = width + 'px'
@@ -17,7 +17,7 @@ function Player(width, height, posx, posy) {
   this.directionY = 1
   this.jumping = false
   this.punched = false
-  
+  this.playernum = playernum
 
   this.moveX = function (enemy) {
     if (this.hor >= 0 && this.hor <= 780) {
@@ -34,6 +34,7 @@ function Player(width, height, posx, posy) {
       this.vert -= this.speedY
       this.speedY -= this.speedY*0.6
       this.sprite.style.top = this.vert + 'px'
+      this.jumpSprite(enemy)
     } else {
       if (!this.collideBottom(platform)) {
         this.vert += this.directionY * 20
@@ -45,6 +46,7 @@ function Player(width, height, posx, posy) {
         this.sprite.style.top = this.vert + 'px'
       }  */
       else {
+        this.loadAfterAttack(enemy)
         this.speedY = 40
         this.jumping = false
         this.vert = platform.vert - this.height
@@ -52,6 +54,7 @@ function Player(width, height, posx, posy) {
       }
     }
   }
+
 
   this.bump = function(enemy) {
     this.hor += 5 * this.direction * -1
@@ -92,18 +95,76 @@ function Player(width, height, posx, posy) {
   this.attack = function (enemy) {
     this.wide = 60
     this.sprite.style.width = this.wide + 'px'
-    this.sprite.style.background = 'url(../assets/graphics/PLAYER1FIGHT.png)' //invertir imagen según dirección de personaje - crear función
+    this.loadAttackSprite(enemy)
     if (this.collidePlayers(enemy)) {
       enemy.punched = true
     }
     let timerId = setTimeout (function () {
-      self.wide = 20
+      self.wide = 50
       self.sprite.style.width = self.wide + 'px'
+      self.loadAfterAttack(enemy)
     }, 500)
   }
 
+this.loadAfterAttack = function(enemy) {
+  if (this.hor <= enemy.hor) {
+    if (this.playernum === 1) {
+      this.sprite.style.background = 'url(../assets/graphics/JUG3CAMINA1.png)'
+    } else {
+      this.sprite.style.background = 'url(../assets/graphics/JUG4CAMINA1.png)'
+    }
+  } else {
+    if (this.playernum === 1) {
+      this.sprite.style.background = 'url(../assets/graphics/JUG5CAMINA1.png)'
+    } else {
+      this.sprite.style.background = 'url(../assets/graphics/JUG4CAMINA1.png)'
+    }
+  }
+}
+
+
+this.loadAttackSprite = function(enemy) {
+  if (this.hor <= enemy.hor) {
+    if (this.playernum === 1) {
+      this.sprite.style.background = 'url(../assets/graphics/JUG3PUNCH.png)'
+    }  else {
+      this.sprite.style.background = 'url(../assets/graphics/JUG6PUNCH.png)'
+    }
+  } else {
+    if (this.playernum === 1) {
+      this.sprite.style.background = 'url(../assets/graphics/JUG4PUNCH.png)'
+    } else {
+      this.sprite.style.background = 'url(../assets/graphics/JUG4PUNCH.png)'
+    }
+  }
+}
+
+this.walkSprite = function() {
+  if (this.direction === 1) {
+    this.sprite.style.background = 'url(../assets/graphics/JUG3CAMINA1.png)'
+  } else if (this.direction === -1) {
+    this.sprite.style.background = 'url(../assets/graphics/JUG4CAMINA1.png)'
+  }
+}
+
+this.jumpSprite = function(enemy) {
+  if (this.hor <= enemy.hor) {
+    if (this.playernum === 1) {
+      this.sprite.style.background = 'url(../assets/graphics/JUG3SALTO1.png)'
+    } else {
+      this.sprite.style.background = 'url(../assets/graphics/JUG3SALTO2.png)'
+    }
+  } else {
+    if (this.playernum === 1) {
+      this.sprite.style.background = 'url(../assets/graphics/JUG4SALTO.png)'
+    } else {
+      this.sprite.style.background = 'url(../assets/graphics/JUG4CAIDA.png)'
+    }
+  }
+}
+  
   this.moveHit = function () {
-    if (this.punched && this.speedHit >=0.15) {
+    if (this.punched && this.speedHit >= 0.15) {
       this.hor += this.speedHit
       this.speedHit -= this.speedHit*0.6
       this.sprite.style.left = this.hor + 'px'
