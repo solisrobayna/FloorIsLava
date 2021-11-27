@@ -15,6 +15,7 @@ h1 {
     height: 600px;
     border: solid 1px black;
     background-color: grey;
+    background-size: cover;
   }
   
   #lava {
@@ -41,11 +42,4 @@ h1 {
     background-size: contain;
     background-repeat: no-repeat;
     border: solid 1px black;
-  }
-
-  #goal {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    background-color: white; 
   }

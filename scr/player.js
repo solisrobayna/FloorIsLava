@@ -93,14 +93,14 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.attack = function (enemy) {
-    this.wide = 60
+    this.wide = 30
     this.sprite.style.width = this.wide + 'px'
     this.loadAttackSprite(enemy)
     if (this.collidePlayers(enemy)) {
       enemy.punched = true
     }
     let timerId = setTimeout (function () {
-      self.wide = 50
+      self.wide = 20
       self.sprite.style.width = self.wide + 'px'
       self.loadAfterAttack(enemy)
     }, 500)
@@ -133,8 +133,13 @@ this.loadAttackSprite = function(enemy) {
   } else {
     if (this.playernum === 1) {
       this.sprite.style.background = 'url(../assets/graphics/JUG4PUNCH.png)'
+      this.sprite.style.position = 'absolute'
+      this.sprite.style.right = '0px'
+      this.sprite.style.left = this.hor + 'px'
     } else {
       this.sprite.style.background = 'url(../assets/graphics/JUG4PUNCH.png)'
+      this.sprite.style.position = 'absolute'
+      this.sprite.style.right = '0px'
     }
   }
 }

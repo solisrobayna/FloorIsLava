@@ -15,6 +15,7 @@ function clearScreen () {
 function startGame () {
     clearScreen()
     var parent = document.getElementById('main')
+    parent.style.background = 'url(../assets/graphics/sfa2_ryu-d748b56b5c28dbbbce170bbacc320d5a.gif)'
     var plat1 = new Platform (200,75,300,300)
    /* var plat2 = new Platform ('75px','150px','300px','350px','platform')
     var plat3 = new Platform ('75px','250px','500px','250px','platform')
