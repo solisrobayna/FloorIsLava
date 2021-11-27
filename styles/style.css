@@ -30,7 +30,7 @@ h1 {
   
   #player1 {
     position: absolute;
-    background: url(../assets/graphics/JUG3CAMINA1.png) 0px 0px;
+    background: url(../assets/graphics/player1/BIKERWALKRIGHT1.png) 0px 0px;
     background-size: contain;
     background-repeat: no-repeat;
     border: solid 1px black;
@@ -38,7 +38,7 @@ h1 {
   
   #player2 {
     position: absolute;
-    background: url(../assets/graphics/JUG4CAMINA1.png) 0px 0px;
+    background: url(../assets/graphics/player2/PUNKWALKLEFT1.png) 0px 0px;
     background-size: contain;
     background-repeat: no-repeat;
     border: solid 1px black;
