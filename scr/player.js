@@ -32,14 +32,14 @@ function Player(width, height, posx, posy, playernum) {
   this.moveY = function (platform, enemy) {
     if (this.jumping && this.speedY >= 0.15) {
       this.vert -= this.speedY
-      this.speedY -= this.speedY*0.6
+      this.speedY -= this.speedY * 0.6
       this.sprite.style.top = this.vert + 'px'
       this.jumpSprite(enemy)
     } else {
       if (!this.collideBottom(platform)) {
         this.vert += this.directionY * 20
         this.sprite.style.top = this.vert + 'px'
-       } /* else if (this.collidePlayers(enemy)) {
+      } /* else if (this.collidePlayers(enemy)) {
         this.speedY = 40
         this.jumping = false
         this.vert = enemy.vert - this.height
@@ -56,14 +56,14 @@ function Player(width, height, posx, posy, playernum) {
   }
 
 
-  this.bump = function(enemy) {
+  this.bump = function (enemy) {
     this.hor += 5 * this.direction * -1
     this.sprite.style.left = this.hor + 'px'
-    enemy.hor += 5 * this.direction 
+    enemy.hor += 5 * this.direction
     enemy.sprite.style.left = enemy.hor + 'px'
   }
 
-  
+
 
   this.collideLava = function (lava) {
     if (this.vert + this.height >= lava) {
@@ -74,8 +74,8 @@ function Player(width, height, posx, posy, playernum) {
 
   this.collideBottom = function (platform) {
     if (this.vert + this.height >= platform.vert &&
-        this.hor <= platform.hor + platform.width &&
-        this.hor + this.wide >= platform.hor) {
+      this.hor <= platform.hor + platform.width &&
+      this.hor + this.wide >= platform.hor) {
       return true
     }
     return false
@@ -87,91 +87,118 @@ function Player(width, height, posx, posy, playernum) {
       this.hor + this.wide >= enemy.hor &&
       this.vert <= enemy.vert + enemy.height &&
       this.vert + this.height >= enemy.vert) {
-       return true
+      return true
     }
     return false
   }
 
   this.attack = function (enemy) {
-    this.wide = 60
-    this.sprite.style.width = this.wide + 'px'
     this.loadAttackSprite(enemy)
+    this.wide = this.changeWide(enemy)
+    this.sprite.style.width = this.wide + 'px'
     if (this.collidePlayers(enemy)) {
       enemy.punched = true
     }
-    let timerId = setTimeout (function () {
-      self.wide = 50
+    let timerId = setTimeout(function () {
+      self.wide = 20
       self.sprite.style.width = self.wide + 'px'
       self.loadAfterAttack(enemy)
     }, 500)
   }
 
-this.loadAfterAttack = function(enemy) {
-  if (this.hor <= enemy.hor) {
-    if (this.playernum === 1) {
-      this.sprite.style.background = 'url(../assets/graphics/JUG3CAMINA1.png)'
+  this.loadAfterAttack = function (enemy) {
+    if (this.hor <= enemy.hor) {
+      if (this.playernum === 1) {
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKRIGHT1.png) no-repeat'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKRIGHT1.png) no-repeat'
+      }   
     } else {
-      this.sprite.style.background = 'url(../assets/graphics/JUG4CAMINA1.png)'
-    }
-  } else {
-    if (this.playernum === 1) {
-      this.sprite.style.background = 'url(../assets/graphics/JUG5CAMINA1.png)'
-    } else {
-      this.sprite.style.background = 'url(../assets/graphics/JUG4CAMINA1.png)'
+      if (this.playernum === 1) {
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) no-repeat'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png) no-repeat'
+      }
     }
   }
-}
+
+  this.lookAt = function (enemy) {
+   if( this.hor <= enemy.hor) {
+     return 'right'
+   } else {
+     return 'left'
+   }
+  }
 
 
-this.loadAttackSprite = function(enemy) {
-  if (this.hor <= enemy.hor) {
-    if (this.playernum === 1) {
-      this.sprite.style.background = 'url(../assets/graphics/JUG3PUNCH.png)'
-    }  else {
-      this.sprite.style.background = 'url(../assets/graphics/JUG6PUNCH.png)'
-    }
-  } else {
-    if (this.playernum === 1) {
-      this.sprite.style.background = 'url(../assets/graphics/JUG4PUNCH.png)'
+  this.loadAttackSprite = function (enemy) {
+    if (this.lookAt(enemy) === 'right') {
+      if (this.playernum === 1) {
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERPUNCHRIGHT.png)'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKPUNCHRIGHT.png)'
+      }
     } else {
-      this.sprite.style.background = 'url(../assets/graphics/JUG4PUNCH.png)'
+      if (this.playernum === 1) {
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERPUNCHLEFT.png)'
+        this.hor -= 20
+        this.sprite.style.left = this.hor + 'px'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKPUNCHLEFT.png)'
+      }
     }
   }
-}
-
-this.walkSprite = function() {
-  if (this.direction === 1) {
-    this.sprite.style.background = 'url(../assets/graphics/JUG3CAMINA1.png)'
-  } else if (this.direction === -1) {
-    this.sprite.style.background = 'url(../assets/graphics/JUG4CAMINA1.png)'
-  }
-}
-
-this.jumpSprite = function(enemy) {
-  if (this.hor <= enemy.hor) {
-    if (this.playernum === 1) {
-      this.sprite.style.background = 'url(../assets/graphics/JUG3SALTO1.png)'
-    } else {
-      this.sprite.style.background = 'url(../assets/graphics/JUG3SALTO2.png)'
-    }
-  } else {
-    if (this.playernum === 1) {
-      this.sprite.style.background = 'url(../assets/graphics/JUG4SALTO.png)'
-    } else {
-      this.sprite.style.background = 'url(../assets/graphics/JUG4CAIDA.png)'
-    }
-  }
-}
   
+  this.changeWide = function (enemy) {
+    if ( this.hor <= enemy.hor) {
+      return 25
+    } else { 
+      this.sprite.style.right = '0px'
+      return 25
+    }
+  }
+
+  this.walkSprite = function () {
+    if (this.direction === 1) {
+      if (this.playernum === 1) {
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKRIGHT1.png)'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKRIGHT1.png)'
+      } 
+    } else if (this.direction === -1) {
+      if (this.playernum === 1) {
+         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png)'
+        } else {
+          this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png)'
+        }
+    }
+  }
+
+  this.jumpSprite = function (enemy) {
+    if (this.hor <= enemy.hor) {
+      if (this.playernum === 1) {
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERJUMPRIGHT1.png)'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKJUMPRIGHT1.png)'
+      }
+    } else {
+      if (this.playernum === 1) {
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERJUMPLEFT1.png)'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKJUMPLEFT1.png)'
+      }
+    }
+  }
+
   this.moveHit = function () {
     if (this.punched && this.speedHit >= 0.15) {
       this.hor += this.speedHit
-      this.speedHit -= this.speedHit*0.6
+      this.speedHit -= this.speedHit * 0.6
       this.sprite.style.left = this.hor + 'px'
     } else {
       this.punched = false
       this.speedHit = 25
-    } 
+    }
   }
 
 }
