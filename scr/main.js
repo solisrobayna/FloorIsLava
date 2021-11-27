@@ -19,8 +19,8 @@ function startGame () {
    /* var plat2 = new Platform ('75px','150px','300px','350px','platform')
     var plat3 = new Platform ('75px','250px','500px','250px','platform')
     var plat4 = new Platform ('75px','350px','650px','150px','platform')*/
-    var player1 = new Player(50, 45, 350, 280, 1)
-    var player2 = new Player(50, 45, 450, 280, 2)
+    var player1 = new Player(20, 35, 350, 280, 1)
+    var player2 = new Player(20, 35, 450, 280, 2)
    
    
     var lava = new Lava (800, 100, 0, 500)
@@ -88,8 +88,11 @@ function startGame () {
         player2.moveX(player1)
         player2.moveY(plat1, player1)
         player2.walkSprite()
-        player2.moveHit()
-        player1.moveHit()
+        player2.moveHit(player1)
+        player1.moveHit(player2)
+        player1.lookAt(player2)
+        player2.lookAt(player1)
+        console.log(player1.lookAt(player2))
       //  lava.grow()
        if (player1.collideLava(600 - lava.height) ||
             player2.collideLava(600 - lava.height)) {
