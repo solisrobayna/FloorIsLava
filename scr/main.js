@@ -93,7 +93,6 @@ function startGame () {
         player1.moveHit(player2)
         player1.lookAt(player2)
         player2.lookAt(player1)
-        console.log(player1.lookAt(player2))
       //  lava.grow()
        if (player1.collideLava(600 - lava.height) ||
             player2.collideLava(600 - lava.height)) {
