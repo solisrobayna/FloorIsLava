@@ -43,3 +43,35 @@ h1 {
     background-repeat: no-repeat;
     border: solid 1px black;
   }
+
+  .life1 {
+    width: 20px;
+    height: 35px;
+    display: inline-block;
+    background: url(../assets/graphics/player1/BIKERWALKRIGHT1.png);
+    background-repeat: no-repeat;
+  }
+
+  #life-container1 {
+    width: 70px;
+    height: 35px;
+    position: absolute;
+    left: 100px;
+    top: 50px;
+  }
+
+  .life2 {
+    width: 20px;
+    height: 35px;
+    display: inline-block;
+    background: url(../assets/graphics/player2/PUNKWALKLEFT1.png);
+    background-repeat: no-repeat;
+  }
+
+  #life-container2 {
+    width: 70px;
+    height: 35px;
+    position: absolute;
+    left: 630px;
+    top: 50px;
+  }

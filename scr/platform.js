@@ -10,6 +10,7 @@ function Platform (width, height, posx, posy, id) {
   this.hor = posx
   this.width = width
   this.height = height
+  
 
   this.reduce = function() {
     self.width -= 1
