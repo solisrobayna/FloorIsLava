@@ -15,8 +15,10 @@ function clearScreen () {
 function startGame () {
     clearScreen()
     var parent = document.getElementById('main')
-    parent.style.background = 'url(../assets/graphics/sfa2_ryu-d748b56b5c28dbbbce170bbacc320d5a.gif)'
-    var plat1 = new Platform (200,75,300,300)
+    parent.style.background = 'url(../assets/graphics/scifi.gif)'
+    parent.style.backgroundSize = 'contain'
+    parent.style.backgroundRepeat = 'no-repeat'
+    var plat1 = new Platform (500,75,150,300)
    /* var plat2 = new Platform ('75px','150px','300px','350px','platform')
     var plat3 = new Platform ('75px','250px','500px','250px','platform')
     var plat4 = new Platform ('75px','350px','650px','150px','platform')*/
@@ -93,7 +95,8 @@ function startGame () {
         player1.moveHit(player2)
         player1.lookAt(player2)
         player2.lookAt(player1)
-      //  lava.grow()
+        lava.grow()
+        setTimeout (plat1.reduce,10000)
        if (player1.collideLava(600 - lava.height) ||
             player2.collideLava(600 - lava.height)) {
             clearInterval(timerId)
