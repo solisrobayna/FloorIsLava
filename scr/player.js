@@ -33,24 +33,23 @@ function Player(width, height, posx, posy, playernum) {
     if (this.jumping && this.speedY >= 0.15) {
       this.vert -= this.speedY
       this.speedY -= this.speedY * 0.6
+      this.width = 25
       this.sprite.style.top = this.vert + 'px'
+      this.sprite.style.width = this.width + 'px'
       this.jumpSprite(enemy)
     } else {
       if (!this.collideBottom(platform)) {
         this.vert += this.directionY * 20
         this.sprite.style.top = this.vert + 'px'
-      } /* else if (this.collidePlayers(enemy)) {
-        this.speedY = 40
-        this.jumping = false
-        this.vert = enemy.vert - this.height
-        this.sprite.style.top = this.vert + 'px'
-      }  */
+      } 
       else {
         this.loadNormalSprite (enemy)
         this.speedY = 40
         this.jumping = false
         this.vert = platform.vert - this.height
         this.sprite.style.top = this.vert + 'px'
+        this.width = 20
+        this.sprite.style.width = this.width + 'px'
       }
     }
   }
@@ -73,7 +72,7 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.collideBottom = function (platform) {
-    if (this.vert + this.height >= platform.vert &&
+    if (this.vert + this.height <= platform.vert &&
       this.hor <= platform.hor + platform.width &&
       this.hor + this.wide >= platform.hor) {
       return true
@@ -116,7 +115,7 @@ function Player(width, height, posx, posy, playernum) {
     } else {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) ssno-repeat'
-        this.hor += 20
+        this.hor += 30
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png) no-repeat'
@@ -172,9 +171,9 @@ function Player(width, height, posx, posy, playernum) {
   
   this.changeWide = function (enemy) {
     if ( this.hor <= enemy.hor) {
-      return 25
+      return 30
     } else { 
-      return 25
+      return 30
     }
   }
 
