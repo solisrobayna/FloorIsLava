@@ -10,17 +10,19 @@ function Player(width, height, posx, posy, playernum) {
   this.hor = posx
   this.vert = posy
   this.height = height
-  this.wide = width
+  this.width = width
   this.speedX = 0
   this.speedHit = 25
   this.speedY = 40
   this.directionY = 1
   this.jumping = false
+  this.attacking = false
   this.punched = false
+  this.falling = false
   this.playernum = playernum
 
-  this.moveX = function (enemy) {
-    if (this.hor >= 0 && this.hor <= 780) {
+  this.moveX = function (enemy, platform) {
+    if (this.hor >= 0 && this.hor <= 780 && !this.falling) {
       this.hor += 5 * this.direction
       this.sprite.style.left = this.hor + 'px'
       if (this.collidePlayers(enemy)) {
@@ -43,13 +45,15 @@ function Player(width, height, posx, posy, playernum) {
         this.sprite.style.top = this.vert + 'px'
       } 
       else {
-        this.loadNormalSprite (enemy)
+        if (!this.attacking) {
+          this.loadNormalSprite (enemy)
         this.speedY = 40
         this.jumping = false
         this.vert = platform.vert - this.height
         this.sprite.style.top = this.vert + 'px'
         this.width = 20
         this.sprite.style.width = this.width + 'px'
+        } 
       }
     }
   }
@@ -72,18 +76,21 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.collideBottom = function (platform) {
-    if (this.vert + this.height <= platform.vert &&
+    if (this.vert + this.height >= platform.vert &&
       this.hor <= platform.hor + platform.width &&
-      this.hor + this.wide >= platform.hor) {
+      this.hor + this.width >= platform.hor) {
+      this.falling = false
       return true
+    }
+    if (!this.jumping) {
+      this.falling = true
     }
     return false
   }
 
-
   this.collidePlayers = function (enemy) {
-    if (this.hor <= enemy.hor + enemy.wide &&
-      this.hor + this.wide >= enemy.hor &&
+    if (this.hor <= enemy.hor + enemy.width &&
+      this.hor + this.width >= enemy.hor &&
       this.vert <= enemy.vert + enemy.height &&
       this.vert + this.height >= enemy.vert) {
       return true
@@ -92,16 +99,18 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.attack = function (enemy) {
+    this.attacking = true
     this.loadAttackSprite(enemy)
-    this.wide = this.changeWide(enemy)
-    this.sprite.style.width = this.wide + 'px'
+    this.width = 30
+    this.sprite.style.width = this.width + 'px'
     if (this.collidePlayers(enemy)) {
       enemy.punched = true
     }
     let timerId = setTimeout(function () {
-      self.wide = 20
-      self.sprite.style.width = self.wide + 'px'
+      self.width = 20
+      self.sprite.style.width = self.width + 'px'
       self.loadAfterAttack(enemy)
+      self.attacking = false
     }, 500)
   }
 
@@ -115,11 +124,11 @@ function Player(width, height, posx, posy, playernum) {
     } else {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) ssno-repeat'
-        this.hor += 30
+        this.hor += 10
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png) no-repeat'
-        this.hor += 5
+        this.hor += 10
         this.sprite.style.left = this.hor + 'px'
       }   
     }
@@ -159,23 +168,23 @@ function Player(width, height, posx, posy, playernum) {
     } else {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERPUNCHLEFT.png) no-repeat'
-        this.hor -= 20
+        this.hor -= 10
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKPUNCHLEFT.png) no-repeat'
-        this.hor -= 5
+        this.hor -= 10
         this.sprite.style.left = this.hor + 'px'
       }
     }
   }
   
-  this.changeWide = function (enemy) {
+ /* this.changewidth = function (enemy) {
     if ( this.hor <= enemy.hor) {
       return 30
     } else { 
       return 30
     }
-  }
+  }*/
 
   this.walkSprite = function () {
     if (this.direction === 1) {

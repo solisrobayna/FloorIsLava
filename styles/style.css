@@ -23,7 +23,7 @@ h1 {
     background-color: red;
   }
   
-  #platform {
+  .platform {
     position: absolute;
     background: url(../assets/graphics/HIGHTECHWALL.png);
   }

@@ -2,8 +2,6 @@ var startButton = document.getElementById('game-start')
 
 startButton.addEventListener('click', startGame)
 
-
-
 function clearScreen () {
     var board = document.getElementById('main')
     var childs = document.querySelectorAll('#main > *')
@@ -15,14 +13,12 @@ function clearScreen () {
 function startGame () {
     clearScreen()
     var parent = document.getElementById('main')
-    var plat1 = new Platform (200,75,300,300)
-   /* var plat2 = new Platform ('75px','150px','300px','350px','platform')
-    var plat3 = new Platform ('75px','250px','500px','250px','platform')
-    var plat4 = new Platform ('75px','350px','650px','150px','platform')*/
-    var player1 = new Player(20, 35, 350, 280, 1)
-    var player2 = new Player(20, 35, 450, 280, 2)
-   
-   
+    parent.style.background = 'url(../assets/graphics/scifi.gif)'
+    parent.style.backgroundSize = 'contain'
+    parent.style.backgroundRepeat = 'no-repeat'
+    var plat1 = new Platform (500,75,150,300)
+    var player1 = new Player(20, 35, 350, 265, 1)
+    var player2 = new Player(20, 35, 450, 265, 2)
     var lava = new Lava (800, 100, 0, 500)
     parent.appendChild(plat1.sprite)
     /*parent.appendChild(plat2.sprite)
@@ -82,10 +78,12 @@ function startGame () {
     })
   
     var timerId = setInterval(function() {  
-        player1.moveX(player2)
+        player1.moveX(player2, plat1)
         player1.moveY(plat1, player2)
-        player1.walkSprite()
-        player2.moveX(player1)
+        if (!player1.jumping) {
+            player1.walkSprite()
+        }
+        player2.moveX(player1, plat1)
         player2.moveY(plat1, player1)
         // changeDirection: 
         player2.walkSprite()

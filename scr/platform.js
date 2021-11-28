@@ -1,7 +1,7 @@
 function Platform (width, height, posx, posy, id) {
   var self = this
   this.sprite = document.createElement('div')
-  this.sprite.setAttribute("id",'platform')
+  this.sprite.setAttribute("class",'platform')
   this.sprite.style.top=posy + 'px'
   this.sprite.style.left=posx + 'px'
   this.sprite.style.width=width + 'px'
@@ -9,7 +9,7 @@ function Platform (width, height, posx, posy, id) {
   this.vert = posy
   this.hor = posx
   this.width = width
-  this.tall = height
+  this.height = height
 
   this.reduce = function() {
     self.width -= 1
