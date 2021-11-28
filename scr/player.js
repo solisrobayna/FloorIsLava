@@ -12,8 +12,8 @@ function Player(width, height, posx, posy, playernum) {
   this.height = height
   this.width = width
   this.speedX = 0
-  this.speedHit = 25
-  this.speedY = 40
+  this.speedHit = 40
+  this.speedY = 60
   this.directionY = 1
   this.jumping = false
   this.attacking = false
@@ -48,11 +48,11 @@ function Player(width, height, posx, posy, playernum) {
       else {
         if (!this.attacking) {
           this.loadNormalSprite (enemy)
-        this.speedY = 40
+        this.speedY = 60
         this.jumping = false
         this.vert = platform.vert - this.height
         this.sprite.style.top = this.vert + 'px'
-        this.width = 20
+        this.width = 30
         this.sprite.style.width = this.width + 'px'
         } 
       }
@@ -102,13 +102,16 @@ function Player(width, height, posx, posy, playernum) {
   this.attack = function (enemy) {
     this.attacking = true
     this.loadAttackSprite(enemy)
-    this.width = 30
+    this.width = 45
     this.sprite.style.width = this.width + 'px'
     if (this.collidePlayers(enemy)) {
       enemy.punched = true
+      sounds.punch1.play()
+    } else {
+      sounds.miss.play()
     }
     let timerId = setTimeout(function () {
-      self.width = 20
+      self.width = 30
       self.sprite.style.width = self.width + 'px'
       self.loadAfterAttack(enemy)
       self.attacking = false
@@ -125,11 +128,11 @@ function Player(width, height, posx, posy, playernum) {
     } else {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) ssno-repeat'
-        this.hor += 10
+        this.hor += 15
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png) no-repeat'
-        this.hor += 10
+        this.hor += 15
         this.sprite.style.left = this.hor + 'px'
       }   
     }
@@ -169,23 +172,15 @@ function Player(width, height, posx, posy, playernum) {
     } else {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERPUNCHLEFT.png) no-repeat'
-        this.hor -= 10
+        this.hor -= 15
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKPUNCHLEFT.png) no-repeat'
-        this.hor -= 10
+        this.hor -= 15
         this.sprite.style.left = this.hor + 'px'
       }
     }
   }
-  
- /* this.changewidth = function (enemy) {
-    if ( this.hor <= enemy.hor) {
-      return 30
-    } else { 
-      return 30
-    }
-  }*/
 
   this.walkSprite = function () {
     if (this.direction === 1) {
@@ -227,7 +222,7 @@ function Player(width, height, posx, posy, playernum) {
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.punched = false
-        this.speedHit = 25
+        this.speedHit = 40
       }
     } else {
       if (this.punched && this.speedHit >= 0.15) {
@@ -236,7 +231,7 @@ function Player(width, height, posx, posy, playernum) {
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.punched = false
-        this.speedHit = 25
+        this.speedHit = 40
       }
     }
   }
