@@ -16,6 +16,8 @@ function startGame () {
     parent.style.background = 'url(../assets/graphics/scifi.gif)'
     parent.style.backgroundSize = 'contain'
     parent.style.backgroundRepeat = 'no-repeat'
+    var lives = document.createElement('div')
+    lives.setAttribute('id','player1Lives')
     var plat1 = new Platform (500,75,150,300)
     var player1 = new Player(20, 35, 350, 265, 1)
     var player2 = new Player(20, 35, 450, 265, 2)
@@ -24,6 +26,7 @@ function startGame () {
     parent.appendChild(player1.sprite)
     parent.appendChild(player2.sprite)
     parent.appendChild(lava.sprite)
+    parent.appendChild(lives)
 
     window.addEventListener('keydown',function(e) {
         switch(e.key) {
