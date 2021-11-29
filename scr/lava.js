@@ -7,7 +7,6 @@ function Lava (width, height, posx, posy) {
     this.sprite.style.height=height + 'px'
     this.height = height
     
-    
     this.grow = function () {
       if (this.height >= 0 && this.height <= 600) {
         this.height += 0.1

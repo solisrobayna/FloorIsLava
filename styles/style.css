@@ -14,13 +14,19 @@ h1 {
     width: 800px;
     height: 600px;
     border: solid 1px black;
-    background-color: grey;
-    background-size: cover;
+    background: rgb(238, 19, 190);
+    background-size: contain;
   }
   
+video {
+  width: 800px;
+  height: 600px;
+  object-fit: cover;
+}
+
   #lava {
     position: absolute;
-    background-color: red;
+    background-color: rgb(218, 0, 0);
   }
   
   .platform {
@@ -31,17 +37,17 @@ h1 {
   #player1 {
     position: absolute;
     background: url(../assets/graphics/player1/BIKERWALKRIGHT1.png) 0px 0px;
+    scale: 1.5;
     background-size: contain;
     background-repeat: no-repeat;
-    border: solid 1px black;
   }
   
   #player2 {
     position: absolute;
     background: url(../assets/graphics/player2/PUNKWALKLEFT1.png) 0px 0px;
     background-size: contain;
+    scale: 1.5;
     background-repeat: no-repeat;
-    border: solid 1px black;
   }
 
   .life1 {

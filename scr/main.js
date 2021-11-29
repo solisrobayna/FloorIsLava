@@ -1,7 +1,17 @@
 var startButton = document.getElementById('game-start')
-
-
 startButton.addEventListener('click', startGame)
+
+const music = {
+    0: new Audio ('../assets/music/TakeOnMe.mp3'),
+    1: new Audio ('../assets/music/HoldingOutForAHero.mp3'),
+    2: new Audio ('../assets/music/WelcomeToTheJungle.mp3'),
+}
+
+const sounds = {
+    punch1: new Audio ('../assets/music/sounds/Punch1.mp3'),
+    punch2: new Audio ('../assets/music/sounds/Punch2.mp3'),
+    miss: new Audio ('../assets/music/sounds/Miss.mp3'),
+}
 
 function clearScreen() {
     var board = document.getElementById('main')
@@ -11,11 +21,19 @@ function clearScreen() {
     }
 }
 
-function gameOver(winner) {
+function selectSong () {
+    return Math.floor(Math.random()*3)
+}
+
+function gameOver(winner,music) {
+    music.pause()
     window.alert(`player ${winner} wins`)
 }
 function startGame () {
     clearScreen()
+     var ost = music[selectSong()]
+     ost.volume = 0.3
+     ost.play()
     var parent = document.getElementById('main')
     parent.style.background = 'url(../assets/graphics/scifi.gif)'
     parent.style.backgroundSize = 'contain'
@@ -27,8 +45,8 @@ function startGame () {
     lives1.innerHTML = '<div class=life1></div><div class=life1></div><div class=life1></div>'
     lives2.innerHTML = '<div class=life2></div><div class=life2></div><div class=life2></div>'
     var plat1 = new Platform (500,75,150,300)
-    var player1 = new Player(20, 35, 350, 265, 1)
-    var player2 = new Player(20, 35, 450, 265, 2)
+    var player1 = new Player(30, 40, 350, 260, 1)
+    var player2 = new Player(30, 40, 450, 260, 2)
     var lava = new Lava (800, 100, 0, 500)
     var livesArray1 = document.getElementsByClassName('life1')
     var livesArray2 = document.getElementsByClassName('life2')
@@ -53,7 +71,9 @@ function startGame () {
                 }
                 break
             case 'Enter':
-                player1.attack(player2)
+                if(!player1.attacking) {
+                    player1.attack (player2)
+                }
                 break
         }
     })
@@ -73,7 +93,9 @@ function startGame () {
                 }
                 break
             case 's':
-                player2.attack(player1)
+                if(!player1.attacking) {
+                    player2.attack(player1)
+                }
                 break
         }
     })
@@ -102,32 +124,21 @@ function startGame () {
         player2.lookAt(player1)
         lava.grow()
         var timerPlat = setTimeout (plat1.reduce,10000)
-       if (player1.collideLava(600 - lava.height)) {
-            player1.hor = 350 
-            player1.sprite.style.left = 350 + 'px'
-            player1.sprite.style.top = 170 + 'px'
-            player1.vert = 170
-            player1.lives -= 1
-            lives1.removeChild(livesArray1[0])
+        if (player1.collideLava(600 - lava.height)) {
+           player1.missLife(lives1,livesArray1)
         }
         if (player2.collideLava(600 - lava.height)) {
-        player2.hor = 450
-        player2.sprite.style.left = 450 + 'px'
-        player2.sprite.style.top = 170 + 'px'
-        player2.vert = 170
-        player2.lives -= 1
-        lives2.removeChild(livesArray2[0])
+            player2.missLife(lives2,livesArray2)
         }
-
         if (player1.isDead()) {
             clearInterval(timerId)
             clearTimeout(timerPlat)
-            gameOver(player2.playernum) 
+            gameOver(player2.playernum, ost) 
         }
         if (player2.isDead()) {
             clearInterval(timerId)
             clearTimeout(timerPlat)
-            gameOver(player1.playernum) 
+            gameOver(player1.playernum, ost) 
         }
     },50)
 
