@@ -119,7 +119,7 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.loadAfterAttack = function (enemy) {
-    if (this.lookAt (enemy) === 'right') {
+    if (this.lookAt (enemy) === 1) {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKRIGHT1.png) no-repeat'
       } else {
@@ -140,14 +140,14 @@ function Player(width, height, posx, posy, playernum) {
 
   this.lookAt = function (enemy) {
    if( this.hor <= enemy.hor) {
-     return 'right'
+     return 1 //right
    } else {
-     return 'left'
+     return -1 //left
    }
   }
   
   this.loadNormalSprite = function (enemy) {
-    if (this.lookAt (enemy) === 'right') {
+    if (this.lookAt (enemy) === 1) {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKRIGHT1.png) no-repeat'
       } else {
@@ -163,7 +163,7 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.loadAttackSprite = function (enemy) {
-    if (this.lookAt(enemy) === 'right') {
+    if (this.lookAt(enemy) === 1) {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERPUNCHRIGHT.png)no-repeat'
       } else {
@@ -215,25 +215,23 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.moveHit = function (enemy) {
-    if ( this.lookAt (enemy) === 'left') {
       if (this.punched && this.speedHit >= 0.15) {
-        this.hor += this.speedHit
+        this.hor -= this.speedHit*this.lookAt(enemy)
         this.speedHit -= this.speedHit * 0.6
         this.sprite.style.left = this.hor + 'px'
       } else {
         this.punched = false
         this.speedHit = 40
       }
-    } else {
-      if (this.punched && this.speedHit >= 0.15) {
-        this.hor -= this.speedHit
-        this.speedHit -= this.speedHit * 0.6
-        this.sprite.style.left = this.hor + 'px'
-      } else {
-        this.punched = false
-        this.speedHit = 40
-      }
-    }
+  }
+
+  this.missLife = function(lives, arr) {
+    this.hor = 400 
+    this.sprite.style.left = this.hor + 'px'
+    this.sprite.style.top = 170 + 'px'
+    this.vert = 170
+    this.lives -= 1
+    lives.removeChild(arr[0])
   }
 
   this.isDead = function () {

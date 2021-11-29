@@ -25,14 +25,15 @@ function selectSong () {
     return Math.floor(Math.random()*3)
 }
 
-function gameOver(winner) {
-  window.alert(`player ${winner} wins`)
+function gameOver(winner,music) {
+    music.pause()
+    window.alert(`player ${winner} wins`)
 }
 function startGame () {
     clearScreen()
-     music[selectSong()].play()
-     var ost = document.querySelectorAll('audio')
-     ost.volume = 0.1
+     var ost = music[selectSong()]
+     ost.volume = 0.3
+     ost.play()
     var parent = document.getElementById('main')
     parent.style.background = 'url(../assets/graphics/scifi.gif)'
     parent.style.backgroundSize = 'contain'
@@ -70,7 +71,9 @@ function startGame () {
                 }
                 break
             case 'Enter':
-                player1.attack (player2)
+                if(!player1.attacking) {
+                    player1.attack (player2)
+                }
                 break
         }
     })
@@ -90,7 +93,9 @@ function startGame () {
               }
               break
             case 's':
-                player2.attack(player1)
+                if(!player1.attacking) {
+                    player2.attack(player1)
+                }
                 break
       }
     }) 
@@ -124,32 +129,21 @@ function startGame () {
         player2.lookAt(player1)
         lava.grow()
         var timerPlat = setTimeout (plat1.reduce,10000)
-       if (player1.collideLava(600 - lava.height)) {
-            player1.hor = 400 
-            player1.sprite.style.left = player1.hor + 'px'
-            player1.sprite.style.top = 170 + 'px'
-            player1.vert = 170
-            player1.lives -= 1
-            lives1.removeChild(livesArray1[0])
+        if (player1.collideLava(600 - lava.height)) {
+           player1.missLife(lives1,livesArray1)
         }
         if (player2.collideLava(600 - lava.height)) {
-        player2.hor = 400
-        player2.sprite.style.left = player2.hor + 'px'
-        player2.sprite.style.top = 170 + 'px'
-        player2.vert = 170
-        player2.lives -= 1
-        lives2.removeChild(livesArray2[0])
+            player2.missLife(lives2,livesArray2)
         }
-
         if (player1.isDead()) {
             clearInterval(timerId)
             clearTimeout(timerPlat)
-            gameOver(player2.playernum) 
+            gameOver(player2.playernum, ost) 
         }
         if (player2.isDead()) {
             clearInterval(timerId)
             clearTimeout(timerPlat)
-            gameOver(player1.playernum) 
+            gameOver(player1.playernum, ost) 
         }
     },50)
 
