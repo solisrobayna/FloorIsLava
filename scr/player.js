@@ -243,7 +243,7 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.isDead = function () {
-    if (this.lives === 0) {
+    if ( this.lives === 0) {
       return true
     }
   }
