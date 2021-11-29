@@ -1,3 +1,4 @@
+
 function Player(width, height, posx, posy, playernum) {
   var self = this
   this.sprite = document.createElement('div')
@@ -20,6 +21,7 @@ function Player(width, height, posx, posy, playernum) {
   this.punched = false
   this.falling = false
   this.playernum = playernum
+  this.lives = 3
 
   this.moveX = function (enemy, platform) {
     if (this.hor >= 0 && this.hor <= 780 && !this.falling) {
@@ -237,6 +239,12 @@ function Player(width, height, posx, posy, playernum) {
         this.punched = false
         this.speedHit = 25
       }
+    }
+  }
+
+  this.isDead = function () {
+    if (this.lives === 0) {
+      return true
     }
   }
 }
