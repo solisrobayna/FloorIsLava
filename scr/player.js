@@ -43,17 +43,17 @@ function Player(width, height, posx, posy, playernum) {
       if (!this.collideBottom(platform)) {
         this.vert += this.directionY * 20
         this.sprite.style.top = this.vert + 'px'
-      } 
+      }
       else {
         if (!this.attacking) {
-          this.loadNormalSprite (enemy)
-        this.speedY = 40
-        this.jumping = false
-        this.vert = platform.vert - this.height
-        this.sprite.style.top = this.vert + 'px'
-        this.width = 20
-        this.sprite.style.width = this.width + 'px'
-        } 
+          this.loadNormalSprite(enemy)
+          this.speedY = 40
+          this.jumping = false
+          this.vert = platform.vert - this.height
+          this.sprite.style.top = this.vert + 'px'
+          this.width = 20
+          this.sprite.style.width = this.width + 'px'
+        }
       }
     }
   }
@@ -115,12 +115,12 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.loadAfterAttack = function (enemy) {
-    if (this.lookAt (enemy) === 'right') {
+    if (this.lookAt(enemy) === 'right') {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKRIGHT1.png) no-repeat'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKRIGHT1.png) no-repeat'
-      }   
+      }
     } else {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) ssno-repeat'
@@ -130,25 +130,25 @@ function Player(width, height, posx, posy, playernum) {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png) no-repeat'
         this.hor += 10
         this.sprite.style.left = this.hor + 'px'
-      }   
+      }
     }
   }
 
   this.lookAt = function (enemy) {
-   if( this.hor <= enemy.hor) {
-     return 'right'
-   } else {
-     return 'left'
-   }
+    if (this.hor <= enemy.hor) {
+      return 'right'
+    } else {
+      return 'left'
+    }
   }
-  
+
   this.loadNormalSprite = function (enemy) {
-    if (this.lookAt (enemy) === 'right') {
+    if (this.lookAt(enemy) === 'right') {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKRIGHT1.png) no-repeat'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKRIGHT1.png) no-repeat'
-      }   
+      }
     } else {
       if (this.playernum === 1) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) no-repeat'
@@ -177,14 +177,14 @@ function Player(width, height, posx, posy, playernum) {
       }
     }
   }
-  
- /* this.changewidth = function (enemy) {
-    if ( this.hor <= enemy.hor) {
-      return 30
-    } else { 
-      return 30
-    }
-  }*/
+
+  /* this.changewidth = function (enemy) {
+     if ( this.hor <= enemy.hor) {
+       return 30
+     } else { 
+       return 30
+     }
+   }*/
 
   this.walkSprite = function () {
     if (this.direction === 1) {
@@ -192,13 +192,13 @@ function Player(width, height, posx, posy, playernum) {
         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKRIGHT1.png) no-repeat'
       } else {
         this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKRIGHT1.png) no-repeat'
-      } 
+      }
     } else if (this.direction === -1) {
       if (this.playernum === 1) {
-         this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) no-repeat'
-        } else {
-          this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png) no-repeat'
-        }
+        this.sprite.style.background = 'url(../assets/graphics/player1/BIKERWALKLEFT1.png) no-repeat'
+      } else {
+        this.sprite.style.background = 'url(../assets/graphics/player2/PUNKWALKLEFT1.png) no-repeat'
+      }
     }
   }
 
@@ -219,7 +219,7 @@ function Player(width, height, posx, posy, playernum) {
   }
 
   this.moveHit = function (enemy) {
-    if ( this.lookAt (enemy) === 'left') {
+    if (this.lookAt(enemy) === 'left') {
       if (this.punched && this.speedHit >= 0.15) {
         this.hor += this.speedHit
         this.speedHit -= this.speedHit * 0.6
